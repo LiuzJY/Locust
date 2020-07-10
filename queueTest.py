@@ -5,12 +5,12 @@ import queue
 class MyTaskSet(TaskSet):
     # headers = {"channel": "014000D",
     #            "version": "5.0.1",
-    #            "ua": "Android_migu",
-    #            "msisdn": "13541353607",
-    #            "uid": "37a64160-421a-4935-936b-4709710bc316",
-    #            "logId": "MIGUTEST",
-    #            "IMEI": "99999999999999999999",
-    #            "idfa": "99999999999999999999"}
+    #            "ua": "123",
+    #            "msisdn": "123",
+    #            "uid": "123",
+    #            "logId": "123",
+    #            "IMEI": "123",
+    #            "idfa": "123"}
     def on_start(self):
         global data
         try:
@@ -23,30 +23,27 @@ class MyTaskSet(TaskSet):
         print('actually msisdn and uid is {} and {}'.format(data['msisdn'], data['uid']))
         self.locust.queueData.put(data)
         headers = {
-            "channel": "014000D",
-            "version": "5.0.1",
-            "ua": "Android_migu",
+            "channel": "123",
+            "version": "123",
+            "ua": "123",
             "msisdn": data['msisdn'],
             "uid": data['uid'],
-            "logId": "MIGUTEST",
-            "IMEI": "99999999999999999999",
-            "idfa": "99999999999999999999"
+            "logId": "123",
+            "IMEI": "123",
+            "idfa": "123"
         }
         return headers
 
     @task(1)
     # 查询我的排名
     def queryMyRankByAct(self):
-        url = "/MAC/activity3/areavote/queryMyRankByAct"
-        params = {"activityId": "LDZY2019",
-                  "singerId": "1004252240",
-                  "stage": "1"}
+        url = "/URL/123/123/123"
+        params = {"activityId": "123",
+                  "singerId": "123",
+                  "stage": "123"}
         headers = MyTaskSet.on_start(self)
         with self.client.get(url, headers=headers, params=params, catch_response=True)as response:
-            print("查询我的排名："+response.text)
-            print("请求中的msisdn:"+response.request.headers['msisdn'])
-            print("使用的msisdn:"+headers["msisdn"])
-            if int(response.elapsed.total_seconds()) > 2:
+                        if int(response.elapsed.total_seconds()) > 2:
                 response.failure("response timeout 2s")
             if response.text.find("\"code\":\"000000\"") < 1:
                 response.failure("code is not 000000")
@@ -72,4 +69,4 @@ class MyLocust(HttpLocust):
 
 if __name__ == "__main__":
     import os
-    os.system("locust -f queueTest.py --host=http://app.act.nf.migu.cn")
+    os.system("locust -f queueTest.py --host=http://www.123.com")
